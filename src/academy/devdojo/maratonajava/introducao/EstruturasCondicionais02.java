@@ -16,6 +16,8 @@ public class EstruturasCondicionais02 {
             categoria = "Categoria Adulto";
         }
 
+        categoria = idade < 15 ? "Categoria Infantil" : idade >= 15 && idade < 18 ? "Categoria Juvenil" : "Categoria Adulto";
+
         System.out.println(categoria);
     }
 }
