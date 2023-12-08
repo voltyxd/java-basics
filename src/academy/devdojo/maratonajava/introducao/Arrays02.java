@@ -7,10 +7,14 @@ public class Arrays02 {
         // boolean = false
         // String = null
 
-        float[] idades = new float[3];
+        String[] nomes = new String[3];
 
-        System.out.println(idades[0]);
-        System.out.println(idades[1]);
-        System.out.println(idades[2]);
+        nomes[0] = "Goku";
+        nomes[1] = "Kurosaki";
+        nomes[2] = "Luffy";
+
+        for (int i = 0; i < nomes.length; i++) {
+            System.out.println(nomes[i]);
+        }
     }
 }
