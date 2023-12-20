@@ -5,9 +5,10 @@ public class Jogador {
     private Time time;
 
     public void imprime() {
-        System.out.println("Nome: " + this.nome);
+        System.out.print("Nome: " + this.nome);
         if (time != null) {
-            System.out.println("Time: " + time.getNome());
+            System.out.print(" | Time: " + time.getNome());
+            System.out.println();
         }
     }
 
