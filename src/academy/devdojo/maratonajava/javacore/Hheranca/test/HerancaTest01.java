@@ -14,6 +14,7 @@ public class HerancaTest01 {
         pessoa.setCpf("11111111");
         pessoa.setEndereco(endereco);
         pessoa.imprime();
+
         Funcionario funcionario = new Funcionario();
         funcionario.setNome("Oda Nobunaga");
         funcionario.setCpf("222222");
