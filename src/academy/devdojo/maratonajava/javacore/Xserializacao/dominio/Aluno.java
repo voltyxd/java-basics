@@ -18,7 +18,6 @@ public class Aluno implements Serializable {
         this.password = password;
     }
 
-    @Serial
     private void writeObject(ObjectOutputStream oos) {
         try {
             oos.defaultWriteObject();
@@ -28,7 +27,6 @@ public class Aluno implements Serializable {
         }
     }
 
-    @Serial
     private void readObject(ObjectInputStream ois) {
         try {
             ois.defaultReadObject();
