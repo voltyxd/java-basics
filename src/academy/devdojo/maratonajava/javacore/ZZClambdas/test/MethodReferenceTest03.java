@@ -12,6 +12,7 @@ public class MethodReferenceTest03 {
         List<String> list = new ArrayList<>(List.of("Rimuru", "Veldora", "Hikimaru"));
         list.sort(String::compareTo);
         System.out.println(list);
+
         Function<String, Integer> numStringToInteger = Integer::parseInt;
         System.out.println(numStringToInteger.apply("10"));
 
