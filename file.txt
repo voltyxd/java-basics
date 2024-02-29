@@ -1,5 +1,5 @@
-BufferedReader test 123 123 123
-BufferedReader test 123 123 123
-BufferedReader test 123 123 123
-BufferedReader test 123 123 123
-BufferedReader test 123 123 123
+Java é legal
+Java vai me deixar rico
+Python é ...
+Php então...
+oh boy
