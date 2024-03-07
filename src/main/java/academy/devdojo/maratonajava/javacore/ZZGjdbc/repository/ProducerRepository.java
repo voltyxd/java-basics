@@ -98,7 +98,6 @@ public class ProducerRepository {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             ResultSetMetaData rsMetaData = rs.getMetaData();
-            rs.next();
             int columnCount = rsMetaData.getColumnCount();
             log.info("Columns count '{}'", columnCount);
             for (int i = 1; i <= columnCount; i++) {
@@ -106,6 +105,72 @@ public class ProducerRepository {
                 log.info("Column name '{}'", rsMetaData.getColumnName(i));
                 log.info("Column size '{}'", rsMetaData.getColumnDisplaySize(i));
                 log.info("Column type '{}'", rsMetaData.getColumnTypeName(i));
+            }
+        } catch (SQLException e) {
+            log.error("Error while trying to show Producer metadata", e);
+        }
+    }
+
+    public static void showDriverMetaData() {
+        log.info("Showing Producer Metadata");
+        try (Connection conn = ConnectionFactory.getConnection();) {
+            DatabaseMetaData dbMetaData = conn.getMetaData();
+            if (dbMetaData.supportsResultSetType(ResultSet.TYPE_FORWARD_ONLY)) {
+                log.info("Supports TYPE_FORWARD_ONLY");
+                if (dbMetaData.supportsResultSetConcurrency(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
+                    log.info("And Suports CONCUR_UPDATABLE");
+                }
+            }
+            if (dbMetaData.supportsResultSetType(ResultSet.TYPE_SCROLL_INSENSITIVE)) {
+                log.info("Supports TYPE_SCROLL_INSENSITIVE");
+                if (dbMetaData.supportsResultSetConcurrency(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+                    log.info("And Suports CONCUR_UPDATABLE");
+                }
+            }
+            if (dbMetaData.supportsResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE)) {
+                log.info("Supports TYPE_SCROLL_SENSITIVE");
+                if (dbMetaData.supportsResultSetConcurrency(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+                    log.info("And Suports CONCUR_UPDATABLE");
+                }
+            }
+        } catch (SQLException e) {
+            log.error("Error while trying to show driver metadata", e);
+        }
+    }
+
+    public static void showTypeScrollWorking() {
+        String sql = "SELECT * FROM anime_store.producer;";
+        try (Connection conn = ConnectionFactory.getConnection();
+             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+             ResultSet rs = stmt.executeQuery(sql)) {
+            log.info("Last row? '{}'", rs.last());
+            log.info("Row number? '{}'", rs.getRow());
+            log.info(Producer.builder().id(rs.getInt("id")).name(rs.getString("name")).build());
+
+            log.info("First row? '{}'", rs.first());
+            log.info("Row number? '{}'", rs.getRow());
+            log.info(Producer.builder().id(rs.getInt("id")).name(rs.getString("name")).build());
+
+            log.info("Row absolute? '{}'", rs.absolute(2));
+            log.info("Row number? '{}'", rs.getRow());
+            log.info(Producer.builder().id(rs.getInt("id")).name(rs.getString("name")).build());
+
+            log.info("Row relative? '{}'", rs.relative(-1));
+            log.info("Row number? '{}'", rs.getRow());
+            log.info(Producer.builder().id(rs.getInt("id")).name(rs.getString("name")).build());
+
+            log.info("Is last? '{}'", rs.isLast());
+            log.info("Row number? '{}'", rs.getRow());
+
+            log.info("Is first? '{}'", rs.isFirst());
+            log.info("Row number? '{}'", rs.getRow());
+
+            log.info("Last row? '{}'", rs.last());
+            log.info("-----------------");
+            rs.next();
+            log.info("After last row? '{}'", rs.isAfterLast());
+            while (rs.previous()) {
+                log.info(Producer.builder().id(rs.getInt("id")).name(rs.getString("name")).build());
             }
         } catch (SQLException e) {
             log.error("Error while trying to find all producers", e);
